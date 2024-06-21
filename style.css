@@ -1,0 +1,178 @@
+body {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 28px;
+    background-color: #fff;
+    color: #121212;
+    margin: 0;
+    padding: 0;
+    padding-top: 50px;
+    background-color: #fff !important;
+    color: black !important;
+}
+
+.cfq-faq-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: black !important; 
+    font-family: Poppins, sans-serif;
+}
+
+.cfq-faq-categories, .cfq-faq-contents {
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: black !important; 
+    font-family: Poppins, sans-serif;
+}
+
+.cfq-faq-categories {
+    flex: 0 0 30%;
+    max-width: 30%;
+}
+
+.cfq-faq-contents {
+    flex: 1;
+    max-width: 70%;
+}
+
+.cfq-faq-categories h2 {
+    font-size: 1.8em;
+    cursor: pointer;
+    margin-bottom: 10px;
+    background-color: #fff !important;
+    color: black !important; 
+    font-family: Poppins, sans-serif;
+}
+
+.cfq-faq-categories h2:hover,
+.cfq-faq-categories h2.active {
+    color: black !important;
+    border-bottom: 2px solid black;
+    width: 60%;
+    background-color: #fff !important;
+}
+
+.cfq-faq-categories h2:hover::after,
+.cfq-faq-categories h2.active::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 50%;
+    height: 2px;
+    background-color: black;
+    transform: translateX(-50%);
+}
+
+.cfq-faq-item {
+    background-color: #fff !important;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    color: black !important;
+    font-family: Poppins, sans-serif;
+}
+
+.cfq-faq h3 {
+    font-size: 1.4em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff !important;
+    color: black !important;
+    font-family: Poppins, sans-serif;
+}
+
+.cfq-faq h3:hover,
+.cfq-faq h3.active {
+    background-color: #e2e9fc !important;
+    color: black !important;
+}
+
+.cfq-faq-content {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fff !important;
+    color: black !important;
+    font-family: Poppins, sans-serif;
+}
+
+.cfq-plus-icon {
+    font-size: 1.2em;
+    margin-left: 10px;
+    color: black !important;
+}
+
+@media (max-width: 1024px) {
+    .cfq-faq-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+        background-color: #fff !important;
+        color: black !important;
+        font-family: Poppins, sans-serif;
+    }
+
+    .cfq-faq-categories,
+    .cfq-faq-contents {
+        max-width: 100%;
+        padding: 10px;
+        flex: 0 0 auto;
+        background-color: #fff !important;
+        color: black !important;
+    }
+
+    .cfq-faq-categories {
+        margin-bottom: 10px;
+        display: center !important;
+        background-color: #fff !important;
+        color: black !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .cfq-faq-categories h2 {
+        font-size: 1.3em;
+        background-color: #fff !important;
+        color: black !important;
+        font-family: Poppins, sans-serif;
+    }
+
+    .cfq-faq h3 {
+        font-size: 1.3em;
+        background-color: #fff !important;
+        color: black !important;
+        font-family: Poppins, sans-serif;
+    }
+}
+
+@media (max-width: 480px) {
+    .cfq-faq-categories h2 {
+        font-size: 1.2em;
+        background-color: #fff !important;
+        color: black !important;
+        font-family: Poppins, sans-serif;
+    }
+
+    .cfq-faq h3 {
+        font-size: 1em;
+        background-color: #fff !important;
+        color: black !important;
+        font-family: Poppins, sans-serif;
+    }
+}
