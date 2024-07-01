@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Allin One FAQ Plugin
+ * Plugin Name: All in One FAQ Plugin
  * Description: Adds an FAQ section to General categories, WooCommerce Categories, Posts, and Pages. Contact Customer Support akesohydra@gmail.com for Queries, Feedback, or Custom Layouts.
- * Version: 2.6.0
+ * Version: 2.6.3
  * Author: Farhat Ullah
  * Author URI: https://wa.me/qr/3BLPEXHO74H7L1
  */
@@ -15,8 +15,8 @@ if (!defined('ABSPATH')) {
 // Enqueue necessary scripts and styles
 function cfq_enqueue_scripts() {
     if (!is_admin()) {
-        wp_enqueue_style('cfq-styles', plugin_dir_url(__FILE__) . 'style.css', array(), '2.5.8'); // Change version number here
-        wp_enqueue_script('cfq-scripts', plugin_dir_url(__FILE__) . 'script.js', array('jquery'), '2.5.5', true);
+        wp_enqueue_style('cfq-styles', plugin_dir_url(__FILE__) . 'style.css', array(), '2.7.2'); // Change version number here
+        wp_enqueue_script('cfq-scripts', plugin_dir_url(__FILE__) . 'script.js', array('jquery'), '2.6.1', true);
     }
 }
 add_action('wp_enqueue_scripts', 'cfq_enqueue_scripts');
@@ -168,51 +168,58 @@ function cfq_display_faq($content) {
         ob_start();
         ?>
         <div class="cfq-faq-container" id="<?php echo $unique_id_prefix; ?>-faq-container">
-            <div class="cfq-faq-categories">
-                <?php 
-                $has_faqs = false;
-                foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) {
-                    if ($term_id) {
-                        $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
-                    } else {
-                        $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
+            <h2 class="cfq-title">Questions? Look Here.</h2>
+            <div class="cfq-faq-inner">
+                <div class="cfq-faq-categories">
+                    <?php 
+                    $has_faqs = false;
+                    $first_category_set = false;
+                    foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) {
+                        if ($term_id) {
+                            $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
+                        } else {
+                            $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
+                        }
+                        if ($selected_faqs) {
+                            $has_faqs = true;
+                            ?>
+                            <h2 id="toggle-<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>" onclick="showFaqs('<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>')" class="<?php echo !$first_category_set ? 'active' : ''; ?>"><?php echo $faq_cat_name; ?></h2>
+                            <?php 
+                            $first_category_set = true;
+                        }
                     }
-                    if ($selected_faqs) {
-                        $has_faqs = true;
-                        ?>
-                        <h2 id="toggle-<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>" onclick="showFaqs('<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>')"><?php echo $faq_cat_name; ?></h2>
-                        <?php 
-                    }
-                }
-                ?>
-            </div>
-            <?php if ($has_faqs) { ?>
-            <div class="cfq-faq-contents">
-                <?php foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) { 
-                    if ($term_id) {
-                        $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
-                    } else {
-                        $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
-                    }
-                    if ($selected_faqs) {
-                        ?>
-                        <div class="cfq-faq" id="<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>-faqs" style="display: none;">
-                            <?php foreach ($selected_faqs as $faq_id) {
-                                $faq = get_post($faq_id);
-                                ?>
-                                <div class="cfq-faq-item">
-                                    <h3 onclick="toggleAnswer(this)"><?php echo esc_html($faq->post_title); ?><span class="cfq-plus-icon">+</span></h3>
-                                    <div class="cfq-faq-content" style="display: none;">
-                                        <p><?php echo wpautop($faq->post_content); ?></p>
+                    ?>
+                </div>
+                <?php if ($has_faqs) { ?>
+                <div class="cfq-faq-contents">
+                    <?php $first_category_set = false; ?>
+                    <?php foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) { 
+                        if ($term_id) {
+                            $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
+                        } else {
+                            $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
+                        }
+                        if ($selected_faqs) {
+                            ?>
+                            <div class="cfq-faq" id="<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>-faqs" style="display: <?php echo !$first_category_set ? 'block' : 'none'; ?>;">
+                                <?php foreach ($selected_faqs as $faq_id) {
+                                    $faq = get_post($faq_id);
+                                    ?>
+                                    <div class="cfq-faq-item">
+                                        <h3 onclick="toggleAnswer(this)"><?php echo esc_html($faq->post_title); ?><span class="cfq-plus-icon">+</span></h3>
+                                        <div class="cfq-faq-content" style="display: none;">
+                                            <p><?php echo wpautop($faq->post_content); ?></p>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php } ?>
-                        </div>
-                        <?php 
-                    }
-                } ?>
+                                <?php } ?>
+                            </div>
+                            <?php 
+                            $first_category_set = true;
+                        }
+                    } ?>
+                </div>
+                <?php } ?>
             </div>
-            <?php } ?>
         </div>
         <?php
         $faq_content = ob_get_clean();
