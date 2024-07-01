@@ -28,7 +28,11 @@
 
     // Ensure DOM is fully loaded before running scripts
     $(document).ready(function() {
-        showFaqs('general');
+        // Find the first category
+        const firstCategory = $('.cfq-faq-categories h2').first().attr('id').replace('toggle-', '');
+        
+        // Show the first category's FAQs by default
+        showFaqs(firstCategory);
 
         // Add event listeners for FAQ category toggles
         $('.cfq-faq-categories h2').on('click', function() {
