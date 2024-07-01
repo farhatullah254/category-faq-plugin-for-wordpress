@@ -1,31 +1,48 @@
-body {
+html, body {
+    padding: 20px !important;
+    margin: 0 !important;
     font-family: Poppins, sans-serif;
     font-weight: 600;
     font-size: 14px;
     line-height: 28px;
     background-color: #fff;
     color: #121212;
-    margin: 0;
-    padding: 0;
-    padding-top: 50px;
+}
+
+body {
+    padding-top: 50px !important;
     background-color: #fff !important;
     color: black !important;
 }
 
 .cfq-faq-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     max-width: 1000px;
-    margin: 50px auto;
-    padding: 20px;
+    margin: 40px auto 0 auto !important;
+    padding: 20px !important;
     box-sizing: border-box;
     background-color: #fff !important;
     color: black !important; 
     font-family: Poppins, sans-serif;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Added shadow to whole container */
+    border-radius: 10px; /* Added border radius to whole container */
+}
+
+.cfq-title {
+    text-align: center;
+    font-size: 1.12em !important; /* Reduced size by 20% */
+    margin-bottom: 20px;
+}
+
+.cfq-faq-inner {
+    display: flex;
+    flex-direction: row; /* Ensure categories and contents are aligned in row */
+    width: 100%; /* Ensure the inner container takes full width */
 }
 
 .cfq-faq-categories, .cfq-faq-contents {
-    padding: 10px;
+    padding: 10px !important;
     box-sizing: border-box;
     background-color: #fff !important;
     color: black !important; 
@@ -35,6 +52,7 @@ body {
 .cfq-faq-categories {
     flex: 0 0 30%;
     max-width: 30%;
+    border: none; /* Removed border */
 }
 
 .cfq-faq-contents {
@@ -43,103 +61,89 @@ body {
 }
 
 .cfq-faq-categories h2 {
-    font-size: 1.8em;
+    font-size: 1.26em !important; /* 30% reduction from 1.8em */
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 0 0 10px 0 !important; /* Set top margin to 0 */
     background-color: #fff !important;
-    color: black !important; 
+    color: #aaa; /* Adjusted color for the inactive state */
     font-family: Poppins, sans-serif;
 }
 
 .cfq-faq-categories h2:hover,
 .cfq-faq-categories h2.active {
-    color: black !important;
-    border-bottom: 2px solid black;
-    width: 60%;
+    color: #121212; /* Adjusted color for the active state */
     background-color: #fff !important;
-}
-
-.cfq-faq-categories h2:hover::after,
-.cfq-faq-categories h2.active::after {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 50%;
-    height: 2px;
-    background-color: black;
-    transform: translateX(-50%);
 }
 
 .cfq-faq-item {
     background-color: #fff !important;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    margin: 0 0 10px 0 !important; /* Set top margin to 0 */
+    padding: 10px !important;
+    border-radius: 10px; /* Added border radius */
+    border: none; /* Removed border */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Added shadow */
     color: black !important;
     font-family: Poppins, sans-serif;
 }
 
 .cfq-faq h3 {
-    font-size: 1.4em;
+    font-size: 0.98em !important; /* 30% reduction from 1.4em */
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    margin: 0;
-    border-bottom: 1px solid #ccc;
+    padding: 10px !important;
+    margin: 0 !important; /* Set top margin to 0 */
     background-color: #fff !important;
-    color: black !important;
+    color: #121212; /* Adjusted color */
     font-family: Poppins, sans-serif;
 }
 
 .cfq-faq h3:hover,
 .cfq-faq h3.active {
     background-color: #e2e9fc !important;
-    color: black !important;
+    color: #121212; /* Adjusted color */
 }
 
 .cfq-faq-content {
     display: none;
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #ccc;
+    margin: 10px 0 0 0 !important; /* Set top margin to 0 */
+    padding: 10px !important;
+    border-top: 2px solid #eee;
     background-color: #fff !important;
     color: black !important;
     font-family: Poppins, sans-serif;
 }
 
 .cfq-plus-icon {
-    font-size: 1.2em;
-    margin-left: 10px;
+    font-size: 1.68em !important; /* Increased size by 100% from 0.84em */
+    margin-left: 10px !important;
     color: black !important;
 }
 
 @media (max-width: 1024px) {
     .cfq-faq-container {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 10px;
+        padding: 10px !important;
         background-color: #fff !important;
         color: black !important;
         font-family: Poppins, sans-serif;
     }
 
+    .cfq-faq-inner {
+        flex-direction: column;
+    }
+
     .cfq-faq-categories,
     .cfq-faq-contents {
-        max-width: 100%;
-        padding: 10px;
+        max-width: 100% !important;
+        padding: 10px !important;
         flex: 0 0 auto;
         background-color: #fff !important;
         color: black !important;
     }
 
     .cfq-faq-categories {
-        margin-bottom: 10px;
-        display: center !important;
+        margin: 0 0 10px 0 !important;
         background-color: #fff !important;
         color: black !important;
     }
@@ -147,14 +151,14 @@ body {
 
 @media (max-width: 768px) {
     .cfq-faq-categories h2 {
-        font-size: 1.3em;
+        font-size: 0.91em !important;
         background-color: #fff !important;
         color: black !important;
         font-family: Poppins, sans-serif;
     }
 
     .cfq-faq h3 {
-        font-size: 1.3em;
+        font-size: 0.91em !important;
         background-color: #fff !important;
         color: black !important;
         font-family: Poppins, sans-serif;
@@ -163,14 +167,14 @@ body {
 
 @media (max-width: 480px) {
     .cfq-faq-categories h2 {
-        font-size: 1.2em;
+        font-size: 0.84em !important;
         background-color: #fff !important;
         color: black !important;
         font-family: Poppins, sans-serif;
     }
 
     .cfq-faq h3 {
-        font-size: 1em;
+        font-size: 0.7em !important;
         background-color: #fff !important;
         color: black !important;
         font-family: Poppins, sans-serif;
