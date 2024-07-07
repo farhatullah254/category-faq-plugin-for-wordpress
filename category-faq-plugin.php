@@ -165,72 +165,83 @@ function cfq_display_faq($content) {
         $faq_categories = get_option('cfq_categories', ['general' => 'General', 'trust-safety' => 'Trust & Safety', 'billing']);
         $unique_id_prefix = ($post_id ? "post-$post_id" : "term-$term_id");
 
-        ob_start();
-        ?>
-        <div class="cfq-faq-container" id="<?php echo $unique_id_prefix; ?>-faq-container">
-            <h2 class="cfq-title">Questions? Look Here.</h2>
-            <div class="cfq-faq-inner">
-                <div class="cfq-faq-categories">
-                    <?php 
-                    $has_faqs = false;
-                    $first_category_set = false;
-                    foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) {
-                        if ($term_id) {
-                            $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
-                        } else {
-                            $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
-                        }
-                        if ($selected_faqs) {
-                            $has_faqs = true;
-                            ?>
-                            <h2 id="toggle-<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>" onclick="showFaqs('<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>')" class="<?php echo !$first_category_set ? 'active' : ''; ?>"><?php echo $faq_cat_name; ?></h2>
-                            <?php 
-                            $first_category_set = true;
-                        }
-                    }
-                    ?>
-                </div>
-                <?php if ($has_faqs) { ?>
-                <div class="cfq-faq-contents">
-                    <?php $first_category_set = false; ?>
-                    <?php foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) { 
-                        if ($term_id) {
-                            $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
-                        } else {
-                            $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
-                        }
-                        if ($selected_faqs) {
-                            ?>
-                            <div class="cfq-faq" id="<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>-faqs" style="display: <?php echo !$first_category_set ? 'block' : 'none'; ?>;">
-                                <?php foreach ($selected_faqs as $faq_id) {
-                                    $faq = get_post($faq_id);
-                                    ?>
-                                    <div class="cfq-faq-item">
-                                        <h3 onclick="toggleAnswer(this)"><?php echo esc_html($faq->post_title); ?><span class="cfq-plus-icon">+</span></h3>
-                                        <div class="cfq-faq-content" style="display: none;">
-                                            <p><?php echo wpautop($faq->post_content); ?></p>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                            <?php 
-                            $first_category_set = true;
-                        }
-                    } ?>
-                </div>
-                <?php } ?>
-            </div>
-        </div>
-        <?php
-        $faq_content = ob_get_clean();
+        $has_faqs = false;
+        foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) {
+            if ($term_id) {
+                $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
+            } else {
+                $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
+            }
+            if ($selected_faqs) {
+                $has_faqs = true;
+                break;
+            }
+        }
 
-        // Append or prepend FAQ content based on the context
-        if ($post_id) {
-            $faq_displayed = true;
-            return $content . $faq_content;
-        } else {
-            $faq_displayed = true;
-            echo $faq_content;
+        if ($has_faqs) {
+            ob_start();
+            ?>
+            <div class="cfq-faq-container" id="<?php echo $unique_id_prefix; ?>-faq-container">
+                <h2 class="cfq-title">Questions? Look Here.</h2>
+                <div class="cfq-faq-inner">
+                    <div class="cfq-faq-categories">
+                        <?php 
+                        $first_category_set = false;
+                        foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) {
+                            if ($term_id) {
+                                $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
+                            } else {
+                                $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
+                            }
+                            if ($selected_faqs) {
+                                ?>
+                                <h2 id="toggle-<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>" onclick="showFaqs('<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>')" class="<?php echo !$first_category_set ? 'active' : ''; ?>"><?php echo $faq_cat_name; ?></h2>
+                                <?php 
+                                $first_category_set = true;
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="cfq-faq-contents">
+                        <?php $first_category_set = false; ?>
+                        <?php foreach ($faq_categories as $faq_cat_slug => $faq_cat_name) { 
+                            if ($term_id) {
+                                $selected_faqs = get_term_meta($term_id, 'faq_list_' . $faq_cat_slug, true);
+                            } else {
+                                $selected_faqs = get_post_meta($post_id, 'faq_list_' . $faq_cat_slug, true);
+                            }
+                            if ($selected_faqs) {
+                                ?>
+                                <div class="cfq-faq" id="<?php echo $unique_id_prefix . '-' . $faq_cat_slug; ?>-faqs" style="display: <?php echo !$first_category_set ? 'block' : 'none'; ?>;">
+                                    <?php foreach ($selected_faqs as $faq_id) {
+                                        $faq = get_post($faq_id);
+                                        ?>
+                                        <div class="cfq-faq-item">
+                                            <h3 onclick="toggleAnswer(this)"><?php echo esc_html($faq->post_title); ?><span class="cfq-plus-icon">+</span></h3>
+                                            <div class="cfq-faq-content" style="display: none;">
+                                                <p><?php echo wpautop($faq->post_content); ?></p>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <?php 
+                                $first_category_set = true;
+                            }
+                        } ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $faq_content = ob_get_clean();
+
+            // Append or prepend FAQ content based on the context
+            if ($post_id) {
+                $faq_displayed = true;
+                return $content . $faq_content;
+            } else {
+                $faq_displayed = true;
+                echo $faq_content;
+            }
         }
     }
 
@@ -330,4 +341,5 @@ function cfq_render_categories_field() {
     <?php
 }
 ?>
+
 
